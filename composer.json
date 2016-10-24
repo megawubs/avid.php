@@ -1,6 +1,6 @@
 {
-  "name": "meagwubs/avid",
-  "description": "API consumption on fire, Laravel Companion for @megawubs/avid npm package. ",
+  "name": "megawubs/avid",
+  "description": "API consumption on fire, Laravel Companion for @megawubs/avid npm package.",
   "type": "library",
   "require": {
     "illuminate/support": "5.*"
@@ -24,5 +24,8 @@
     "classmap": [
       "tests"
     ]
+  },
+  "config": {
+    "preferred-install": "dev"
   }
 }

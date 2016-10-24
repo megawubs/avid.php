@@ -1,3 +1,0 @@
-<script>
-    {!! Ardent::script() !!}
-</script>
