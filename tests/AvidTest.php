@@ -20,7 +20,7 @@ class AvidTest extends \PHPUnit_Framework_TestCase
         $user->email = 'bar@foo.com';
         $ardent->add($user);
         $this->assertEquals(<<<EOT
-avidItems["user"]=[{"name":"foo","email":"bar@foo.com"}];
+avidItems["User"]=[{"name":"foo","email":"bar@foo.com"}];
 EOT
             , $ardent->script()
         );
@@ -39,7 +39,7 @@ EOT
         $ardent->add(new Collection([$user, $user2]));
 
         $this->assertEquals(<<<EOT
-avidItems["user"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
+avidItems["User"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
 EOT
             , $ardent->script()
         );
@@ -51,7 +51,7 @@ EOT
         $user = new Home;
         $ardent->add($user);
         $jsCode = $ardent->script();
-        $this->assertContains('avidItems["home"]', $jsCode);
+        $this->assertContains('avidItems["Home"]', $jsCode);
     }
 
     /**
@@ -78,8 +78,8 @@ EOT
         $home->user_id = 1;
         $ardent->add(collect([$user, $user2, $home]));
         $this->assertEquals(<<<EOT
-avidItems["user"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
-avidItems["home"]=[{"id":1,"name":"unknown","user_id":1}];
+avidItems["User"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
+avidItems["Home"]=[{"id":1,"name":"unknown","user_id":1}];
 EOT
             , $ardent->script());
     }
@@ -98,7 +98,7 @@ EOT
         $home->user = $user;
         $ardent->add($home);
         $this->assertEquals(<<<EOT
-avidItems["home"]=[{"id":1,"name":"unknown","user_id":1,"user":{"id":1,"name":"foo","email":"bar@foo.com"}}];
+avidItems["Home"]=[{"id":1,"name":"unknown","user_id":1,"user":{"id":1,"name":"foo","email":"bar@foo.com"}}];
 EOT
             , $ardent->script());
     }
