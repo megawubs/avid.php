@@ -1,5 +1,5 @@
 {
-  "name": "megawubs/avid",
+  "name": "wubs/avid",
   "description": "API consumption on fire, Laravel Companion for @megawubs/avid npm package.",
   "type": "library",
   "require": {
@@ -17,7 +17,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "MegaWubs\\Avid\\": "./src"
+      "Wubs\\Avid\\": "./src"
     }
   },
   "autoload-dev": {

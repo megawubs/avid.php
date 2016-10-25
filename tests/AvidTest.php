@@ -1,8 +1,7 @@
 <?php
 
-namespace MegaWubs\Avid;
+namespace Wubs\Avid;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class AvidTest extends \PHPUnit_Framework_TestCase

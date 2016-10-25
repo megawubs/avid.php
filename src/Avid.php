@@ -1,6 +1,6 @@
 <?php
 
-namespace MegaWubs\Avid;
+namespace Wubs\Avid;
 
 use Illuminate\Support\Collection;
 

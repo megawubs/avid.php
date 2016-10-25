@@ -1,5 +1,5 @@
 <?php
-namespace MegaWubs\Avid\Facades;
+namespace Wubs\Avid\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
