@@ -8,26 +8,26 @@ class AvidTest extends \PHPUnit_Framework_TestCase
 {
     public function testItCanBeCreated()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
     }
 
     public function testItCanAddModelToStack()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
         $user = new User;
         $user->name = 'foo';
         $user->email = 'bar@foo.com';
-        $ardent->add($user);
+        $avid->add($user);
         $this->assertEquals(<<<EOT
 avidItems["user"]=[{"name":"foo","email":"bar@foo.com"}];
 EOT
-            , $ardent->script()
+            , $avid->script()
         );
     }
 
     public function testItCanAddCollectionToStack()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
         $user = new User;
         $user->name = 'foo';
         $user->email = 'bar@foo.com';
@@ -35,21 +35,21 @@ EOT
         $user2->name = 'foo2';
         $user2->email = 'bar2@foo.com';
 
-        $ardent->add(new Collection([$user, $user2]));
+        $avid->add(new Collection([$user, $user2]));
 
         $this->assertEquals(<<<EOT
 avidItems["user"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
 EOT
-            , $ardent->script()
+            , $avid->script()
         );
     }
 
     public function testModelNameIsUsedInJavaScriptCode()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
         $user = new Home;
-        $ardent->add($user);
-        $jsCode = $ardent->script();
+        $avid->add($user);
+        $jsCode = $avid->script();
         $this->assertContains('avidItems["home"]', $jsCode);
     }
 
@@ -58,13 +58,13 @@ EOT
      */
     public function testOnlyObjectsExtendingFromModelCanBePushed()
     {
-        $ardent = new Avid();
-        $ardent->add('');
+        $avid = new Avid();
+        $avid->add('');
     }
 
     public function testItCanHandleMultipleModelTypes()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
         $user = new User;
         $user->name = 'foo';
         $user->email = 'bar@foo.com';
@@ -75,17 +75,17 @@ EOT
         $home->id = 1;
         $home->name = "unknown";
         $home->user_id = 1;
-        $ardent->add(collect([$user, $user2, $home]));
+        $avid->add(collect([$user, $user2, $home]));
         $this->assertEquals(<<<EOT
 avidItems["user"]=[{"name":"foo","email":"bar@foo.com"},{"name":"foo2","email":"bar2@foo.com"}];
 avidItems["home"]=[{"id":1,"name":"unknown","user_id":1}];
 EOT
-            , $ardent->script());
+            , $avid->script());
     }
 
     public function testItCanHandleRelations()
     {
-        $ardent = new Avid();
+        $avid = new Avid();
         $user = new User;
         $user->id = 1;
         $user->name = 'foo';
@@ -95,13 +95,31 @@ EOT
         $home->name = "unknown";
         $home->user_id = 1;
         $home->user = $user;
-        $ardent->add($home);
+        $avid->add($home);
         $this->assertEquals(<<<EOT
 avidItems["home"]=[{"id":1,"name":"unknown","user_id":1,"user":{"id":1,"name":"foo","email":"bar@foo.com"}}];
 EOT
-            , $ardent->script());
+            , $avid->script());
     }
 
+    public function testItCanAddANamedKey()
+    {
+        $avid = new Avid();
+        $user = new User;
+        $user->id = 1;
+        $user->name = 'foo';
+        $user->email = 'bar@foo.com';
+        $home = new Home;
+        $home->id = 1;
+        $home->name = "unknown";
+        $home->user_id = 1;
+        $home->user = $user;
+        $avid->add($home, 'homes');
+        $this->assertEquals(<<<EOT
+avidItems["homes"]=[{"id":1,"name":"unknown","user_id":1,"user":{"id":1,"name":"foo","email":"bar@foo.com"}}];
+EOT
+            , $avid->script());
+    }
 }
 
 class User
