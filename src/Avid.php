@@ -46,7 +46,7 @@ class Avid
     public function script()
     {
         return $this->models->map(function (Collection $modelInstances, $name) {
-            return 'avidItems["' . $name . '"]=' . $modelInstances->toJson() . ";";
+            return 'avidItems["' . strtolower($name) . '"]=' . $modelInstances->toJson() . ";";
         })->implode("\n")
             ;
     }
